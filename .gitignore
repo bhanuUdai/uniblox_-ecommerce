@@ -1,0 +1,5 @@
+# Virtual environment
+myenv/
+
+# Byte-compiled files
+__pycache__/
