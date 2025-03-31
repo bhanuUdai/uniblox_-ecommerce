@@ -71,7 +71,7 @@ The API uses an in-memory store, so no external database is required.
 
 Once the server is running, open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for interactive API documentation.
 
-## Running the Application Backend
+## Running the Application Frontend
 1.  Navigate to the `ecommerce` directory:
 cd ./frontend/ecommerce/
 
