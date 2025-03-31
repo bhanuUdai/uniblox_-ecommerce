@@ -1,10 +1,9 @@
-// src/App.jsx
-import React, { useState, useEffect } from 'react'; // Import useEffect if you want to see count update immediately on add
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Row, Col, Offcanvas } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import { addToCart, checkout } from './services/apiService';
+import { addToCart, checkout, getAvailableDiscounts } from './services/apiService';
 import ProductList from './components/ProductList';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -23,14 +22,23 @@ function App() {
   const [cart, setCart] = useState([]);
   const [discountCode, setDiscountCode] = useState('');
   const [checkoutToast, setCheckoutToast] = useState({ show: false, message: '', variant: 'success' });
-  const [newCoupon, setNewCoupon] = useState('');
   const [showCart, setShowCart] = useState(false);
-  const [cartCount, setCartCount] = useState(0); // New state for cart count
+  const [cartCount, setCartCount] = useState(0);
+  const [availableCoupons, setAvailableCoupons] = useState([]);
 
   useEffect(() => {
     const totalItems = cart.reduce((count, item) => count + item.quantity, 0);
     setCartCount(totalItems);
   }, [cart]);
+
+  const fetchAvailableCoupons = async () => {
+    try {
+      const data = await getAvailableDiscounts();
+      setAvailableCoupons(data.available_discount_codes);
+    } catch (error) {
+      console.error('Error fetching available coupons:', error);
+    }
+  };
 
   const handleAddToCart = async (product) => {
     const existingItem = cart.find(item => item.id === product.id);
@@ -59,22 +67,15 @@ function App() {
   };
 
   const handleCheckout = async () => {
-    console.log('Checkout initiated');
     try {
       const responseData = await checkout(discountCode);
-      console.log('Checkout successful, response:', responseData);
-      console.log('Before setCheckoutToast (success):', checkoutToast);
       setCheckoutToast({ show: true, message: `Checkout successful! Total: $${responseData.total_amount.toFixed(2)}`, variant: 'success' });
-      console.log('After setCheckoutToast (success):', checkoutToast);
       setCart([]);
-      setNewCoupon(responseData.new_discount_code || '');
       setDiscountCode('');
       setShowCart(false);
+      fetchAvailableCoupons(); // Refresh the coupon list after checkout
     } catch (error) {
-      console.error('Checkout failed, error:', error);
-      console.log('Before setCheckoutToast (error):', checkoutToast);
       setCheckoutToast({ show: true, message: `Checkout failed: ${error.response?.data?.detail || error.message || 'Something went wrong'}`, variant: 'danger' });
-      console.log('After setCheckoutToast (error):', checkoutToast);
     }
   };
 
@@ -83,14 +84,17 @@ function App() {
   };
 
   const handleCloseCart = () => setShowCart(false);
-  const handleShowCart = () => setShowCart(true);
+  const handleShowCart = () => {
+    setShowCart(true);
+    fetchAvailableCoupons(); // Fetch coupons when cart is opened
+  };
 
-  const headerHeight = '100px';
-  const footerHeight = '75px';
+  const headerHeight = '56px';
+  const footerHeight = '110px';
 
   return (
     <div>
-      <Header onCartClick={handleShowCart} cartCount={cartCount} /> {/* Pass cartCount prop */}
+      <Header onCartClick={handleShowCart} cartCount={cartCount} />
       <Container style={{ height: `calc(100vh - ${headerHeight} - ${footerHeight})` }}>
         <Row>
           <Col md={12}>
@@ -98,7 +102,7 @@ function App() {
           </Col>
         </Row>
       </Container>
-        <ToastMessage
+      <ToastMessage
         show={checkoutToast.show}
         onClose={() => setCheckoutToast({ ...checkoutToast, show: false })}
         message={checkoutToast.message}
@@ -118,21 +122,13 @@ function App() {
             setDiscountCode={setDiscountCode}
             onCheckout={handleCheckout}
             total={calculateTotal()}
+            availableCoupons={availableCoupons} // Pass available coupons to Cart
           />
-          {newCoupon && (
-            <div className="mt-3 alert alert-info">
-              Your coupon code: <strong>{newCoupon}</strong>
-            </div>
-          )}
+          {/* No need to show new coupon separately here */}
         </Offcanvas.Body>
       </Offcanvas>
 
-      <ToastMessage
-        show={checkoutToast.show}
-        onClose={() => setCheckoutToast({ ...checkoutToast, show: false })}
-        message={checkoutToast.message}
-        variant={checkoutToast.variant}
-      />
+   
     </div>
   );
 }

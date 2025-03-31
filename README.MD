@@ -54,11 +54,11 @@ The API uses an in-memory store, so no external database is required.
     pytest
     ```
 
-## Running the Application
+## Running the Application Backend
 
 1.  Navigate to the `app` directory:
     ```bash
-    cd app
+    cd ./backend/app/
     ```
 
 2.  Run the FastAPI application:
@@ -70,6 +70,29 @@ The API uses an in-memory store, so no external database is required.
     * `app`: The name of the FastAPI application instance in `main.py`.
 
 Once the server is running, open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for interactive API documentation.
+
+## Running the Application Backend
+1.  Navigate to the `ecommerce` directory:
+cd ./frontend/ecommerce/
+
+2.  **Install the dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+
+2.  **Start the development server:**
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    ```
+
+    This will start the Vite development server, usually at `http://localhost:5173`. Open this URL in your web browser to view the application.
 
 
 ## API Endpoints
@@ -147,7 +170,7 @@ Once the server is running, open [http://127.0.0.1:8000/docs](http://127.0.0.1:8
     pip install pytest
     ```
 
-2.  Navigate to the root directory of the project (where the `tests` folder is located).
+2.  Navigate to the root directory of the project (where the `tests` folder is located cd ./backend).
 
 3.  Run the unit tests using the following command:
     ```bash
@@ -160,12 +183,4 @@ Once the server is running, open [http://127.0.0.1:8000/docs](http://127.0.0.1:8
 
 * The API uses an in-memory store, so data is not persisted across application restarts.
 * A single global cart is used for simplicity. In a real application, you would likely have user-specific carts.
-* The value of 'n' (for every nth order discount) is currently set to 5 in the `app/service.py` file.
-
-## Further Improvements (Optional)
-
-* Implement user authentication and user-specific carts.
-* Persist data using a database.
-* Add more comprehensive error handling and validation.
-* Implement different types of discounts or more complex discount rules.
-* Create a user interface to interact with the API.
+* The value of 'n' (for every nth order discount) is currently set to 2 in the `app/service.py` file.

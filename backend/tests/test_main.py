@@ -111,3 +111,25 @@ def test_get_stats():
     assert stats["total_purchase_amount"] >= 20.0
     assert "STATCODE" in stats["discount_codes"]
     assert stats["total_discount_amount"] >= 1.0
+
+def test_get_available_discount_codes_service():
+    # Set up test data in the in-memory store
+    store.discount_codes.clear()
+    store.discount_codes["UNUSED1"] = {"used": False}
+    store.discount_codes["USED1"] = {"used": True}
+    store.discount_codes["UNUSED2"] = {"used": False}
+    store.discount_codes["USED2"] = {"used": True}
+
+    # Call the service function directly
+    from app.service import get_available_discount_codes_service
+    result = get_available_discount_codes_service()
+
+    # Assert the expected output
+    assert isinstance(result, dict)
+    assert "available_discount_codes" in result
+    assert isinstance(result["available_discount_codes"], list)
+    assert "UNUSED1" in result["available_discount_codes"]
+    assert "UNUSED2" in result["available_discount_codes"]
+    assert "USED1" not in result["available_discount_codes"]
+    assert "USED2" not in result["available_discount_codes"]
+    assert len(result["available_discount_codes"]) == 2

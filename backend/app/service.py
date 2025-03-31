@@ -62,3 +62,7 @@ def get_store_stats_service():
         discount_codes=active_discount_codes,
         total_discount_amount=total_discount_amount
     )
+
+def get_available_discount_codes_service():
+    available_codes = [code for code, status in store.discount_codes.items() if not status["used"]]
+    return {"available_discount_codes": available_codes}

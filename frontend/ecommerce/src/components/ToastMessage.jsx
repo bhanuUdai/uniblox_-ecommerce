@@ -1,4 +1,3 @@
-// src/components/ToastMessage.jsx
 import React from 'react';
 import Toast from 'react-bootstrap/Toast';
 

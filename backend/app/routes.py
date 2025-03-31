@@ -5,6 +5,7 @@ from app.service import (
     process_checkout_service,
     generate_discount_code_admin_service,
     get_store_stats_service,
+    get_available_discount_codes_service,  # Import the new service function
 )
 
 router = APIRouter()
@@ -27,3 +28,7 @@ async def generate_discount():
 @router.get("/admin/stats")
 async def get_stats():
     return get_store_stats_service()
+
+@router.get("/admin/discount/available")
+async def get_available_discounts():
+    return get_available_discount_codes_service()
