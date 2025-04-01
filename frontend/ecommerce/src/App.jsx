@@ -11,11 +11,11 @@ import ToastMessage from './components/ToastMessage';
 import Cart from './components/Cart';
 
 const products = [
-  { id: 1, name: 'Awesome T-Shirt', price: 25.99 },
-  { id: 2, name: 'Cool Coffee Mug', price: 12.50 },
-  { id: 3, name: 'Stylish Backpack', price: 49.99 },
-  { id: 4, name: 'Gaming Mouse', price: 35.00 },
-  { id: 5, name: 'Wireless Keyboard', price: 59.99 },
+  { id: 1, name: 'Awesome T-Shirt', price: 25.99, url : "https://images.unsplash.com/photo-1630643003427-c45e438acbe3?q=80&w=2018&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 2, name: 'Cool Coffee Mug', price: 12.50, url : "https://images.unsplash.com/photo-1680337673561-531bca1cf5b7?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 3, name: 'Stylish Backpack', price: 49.99, url : "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 4, name: 'Gaming Mouse', price: 35.00, url : "https://images.unsplash.com/photo-1613141412501-9012977f1969?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 5, name: 'Wireless Keyboard', price: 59.99,  url : "https://images.unsplash.com/photo-1679533662330-457ca8447e7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ];
 
 function App() {

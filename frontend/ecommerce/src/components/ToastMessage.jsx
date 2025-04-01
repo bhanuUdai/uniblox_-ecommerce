@@ -1,17 +1,25 @@
-import React from 'react';
-import Toast from 'react-bootstrap/Toast';
+import React from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function ToastMessage({ show, onClose, message, variant }) {
-  return (
-    <Toast show={show} onClose={onClose} delay={3000} autohide className="mt-3">
-      <Toast.Header>
-        <strong className="me-auto">Checkout Status</strong>
-      </Toast.Header>
-      <Toast.Body className={`bg-${variant} text-white`}>
-        {message}
-      </Toast.Body>
-    </Toast>
-  );
+function ToastMessage({ message, variant }) {
+  const showToast = () => {
+    toast(message, {
+      type: variant, // toast type will correspond to the variant ('success', 'error', etc.)
+      autoClose: 3000,
+      hideProgressBar: true,
+      position: "top-right",
+      theme: "colored",
+    });
+  };
+
+  React.useEffect(() => {
+    if (message) {
+      showToast();
+    }
+  }, [message]);
+
+  return <ToastContainer />;
 }
 
 export default ToastMessage;
